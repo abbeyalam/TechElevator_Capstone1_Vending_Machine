@@ -58,6 +58,12 @@ public class VendingMachineCLI {
 				// display vending machine items
 				//not Amount, but show location, name, and price
 				//item available/show List
+
+				for (int i = 0; i<inventoryList.size(); i++){
+					System.out.println(inventoryList.get(i).getLocation() + " " +inventoryList.get(i).getName() + " " + inventoryList.get(i).getPrice());
+					//if amount <=0, display SOLD OUT
+				}
+
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
 			}
