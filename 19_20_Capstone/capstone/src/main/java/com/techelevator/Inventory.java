@@ -8,19 +8,29 @@ public abstract class Inventory {
     private String name;
     private int amount;
     private double price;
+    private String noise;
 
     //getters
     public String getLocation(){return this.location;}
     public String getName(){return this.name;}
-    public int getAmount(){return this.amount;}
     public double getPrice(){return this.price;}
+    public int getAmount() {return this.amount;}
+
+    public abstract String makeNoise();
+
+    public int purchaseOneItem(){
+        //return amount
+        amount = amount -1;
+        return amount;
+    }
 
     //constructor
     public Inventory (String location, String name, int amount, double price){
         this.location = location;
         this.name = name;
-        this.amount = amount;
-        this. price = price;
+        this.price = price;
+        this.amount = 5;
     }
+
 
 }
