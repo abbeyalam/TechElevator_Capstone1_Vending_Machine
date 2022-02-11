@@ -6,7 +6,7 @@ public abstract class Inventory {
     //instance variables
     private String location;
     private String name;
-    private int amount;
+    private int amount = 5;
     private double price;
 
     //getters
