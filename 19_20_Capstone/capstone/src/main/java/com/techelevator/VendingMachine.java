@@ -2,18 +2,17 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class VendingMachine {
+    DecimalFormat decimalFormat = new DecimalFormat("0.00");
     Map <String, Inventory> items = new TreeMap<String, Inventory>();
     private double balance = 0;
     private String auditFileName = "Log.txt";
 
     public static void auditFile(){
-
 
     }
 
@@ -33,38 +32,51 @@ public class VendingMachine {
         int quarter = 25;
         int dime = 10;
         int nickel = 5;
-        int balanceInPennies = (int)balance*100;
+        int remainder = 0;
+        int balanceInPennies = (int)(balance*100);
+        double amountOfChangeBeingReturned = balance;
         int returnedQuarters=0;
         int returnedDimes=0;
         int returnedNickels=0;
 
         if(balanceInPennies >0){
-         returnedQuarters = balanceInPennies % quarter;
-         balanceInPennies = balanceInPennies -returnedQuarters*quarter;
-        }
-        if(balanceInPennies >0) {
-            returnedDimes = balanceInPennies % dime;
-            balanceInPennies = balanceInPennies - returnedDimes * dime;
-        }
-        if(balanceInPennies >0) {
-            returnedNickels = balanceInPennies % nickel;
-            balanceInPennies = balanceInPennies - returnedNickels * nickel;
-        }
-        else {
-            return "Balance is" + " " + balance;
+            returnedQuarters = balanceInPennies / quarter;
+            balanceInPennies = balanceInPennies % quarter;
         }
 
-        return "Your change is " + returnedQuarters + " quarters" + " " + returnedDimes + " dimes" + "" + returnedNickels + " nickels";
+        if(balanceInPennies >0) {
+            returnedDimes = balanceInPennies / dime;
+            balanceInPennies = balanceInPennies % dime;
+        }
+
+        if(balanceInPennies >0) {
+            returnedNickels = balanceInPennies / nickel;
+            balanceInPennies = balanceInPennies % nickel;
+        }
+
+        balance = balanceInPennies;
+
+        //TODO: call writeToLogFile for the GIVE CHANGE scenario\
+        String outputString = "GIVE CHANGE: $" + decimalFormat.format(amountOfChangeBeingReturned) +" $" + getBalance();
+        writeToLogFile(outputString);
+
+        return "Your change is " + returnedQuarters + " quarters, " + " " + returnedDimes + " dimes," + "" + returnedNickels + " nickels";
     }
 
 
     public double getBalance(){
-        return balance;
+        return Double.parseDouble(decimalFormat.format(balance));
     }
 
     public double addMoney(double amountToAdd){
         //Only accept whole dollars
+        //TODO: call writeToLogFile for the FEED MONEY scenario
+
         balance +=amountToAdd;
+
+        String outputString = "FEED MONEY: $" + amountToAdd + " $" + getBalance();
+        writeToLogFile(outputString);
+
         return balance;
     }
 
@@ -144,11 +156,25 @@ public class VendingMachine {
             selectedItem.purchaseOneItem();
             System.out.println(selectedItem.makeNoise());
         }
+
+        String outputString = selectedItem.getName() + " " + selectedItem.getLocation() + " $"
+                + selectedItem.getPrice() + " $" + getBalance();
+        writeToLogFile(outputString);
+
         return selectedItem.getName();
     }
 
+    public void writeToLogFile(String outputString){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a ");
+        String currentDate = simpleDateFormat.format(new Date());
+        System.out.println("------------------>" + currentDate + outputString);
 
+        //TODO: Open file
 
+        //TODO: write to log.txt "rolling write" (append)
+
+        //TODO: close file
+    }
 
 
 }
