@@ -29,7 +29,7 @@ public abstract class Inventory {
         this.location = location;
         this.name = name;
         this.price = price;
-        this.amount = 5;
+        this.amount = amount;
     }
 
 

@@ -2,6 +2,7 @@ package com.techelevator;
 
 import com.techelevator.view.Menu;
 
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -40,7 +41,7 @@ public class VendingMachineCLI {
 
 	}
 
-	public void run() {
+	public void run() throws FileNotFoundException {
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
@@ -64,7 +65,7 @@ public class VendingMachineCLI {
 						Double doubleMoneyAdded = Double.parseDouble(moneyAdded);
 						Double balanceInPenniesDouble = (doubleMoneyAdded*100);
 						int balanceInPennies = balanceInPenniesDouble.intValue();
-						if (((balanceInPennies % 10) != 0)){
+						if (((balanceInPennies % 100) != 0)){
 							System.out.println("This machine only takes whole dollars.");
 							break;
 						}
@@ -80,6 +81,7 @@ public class VendingMachineCLI {
 						if(vm1.items.get(selectedProduct) != null){
 							vm1.purchaseItem(selectedProduct);
 							System.out.println("You selected " + selectedProduct);
+
 							//method for purchasing product --> call purchaseItem method
 							//check balance
 							//if balance is <=0 print error message
@@ -110,7 +112,7 @@ public class VendingMachineCLI {
 			}
 		}
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();
