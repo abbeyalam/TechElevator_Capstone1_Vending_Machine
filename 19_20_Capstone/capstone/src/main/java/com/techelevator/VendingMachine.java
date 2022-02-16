@@ -104,7 +104,7 @@ public class VendingMachine {
             System.out.println("Please enjoy your " + selectedItem.getName());
         } else if (balance <= 0){
             //user has a balance of 0, or tries to put in negative money
-            System.out.println("Come back with some money");
+            System.out.println("Come back with some money"); //return strings instead of printing out
         } else if (balance < selectedItem.getPrice()){
             // if item costs more than balance --> return error message
             System.out.println("You need more money for that");

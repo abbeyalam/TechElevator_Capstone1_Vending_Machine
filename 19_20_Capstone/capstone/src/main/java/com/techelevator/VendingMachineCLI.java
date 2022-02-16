@@ -60,11 +60,11 @@ public class VendingMachineCLI {
 					if (purchaseChoices.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
 						System.out.println("How much money do you want to add?");
 						String moneyAdded = scan.nextLine();
-
 						//TODO: Prevent the balance from being anything other than whole dollars
 						Double doubleMoneyAdded = Double.parseDouble(moneyAdded);
 						Double balanceInPenniesDouble = (doubleMoneyAdded * 100);
 						int balanceInPennies = balanceInPenniesDouble.intValue();
+
 						if (((balanceInPennies % 100) != 0)) {
 							System.out.println("This machine only takes whole dollars.");
 							break;
