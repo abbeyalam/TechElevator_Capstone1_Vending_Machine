@@ -57,20 +57,24 @@ public class VendingMachineCLI {
 				while (true) {
 					String purchaseChoices = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 					//adding money
-					if (purchaseChoices.equals(PURCHASE_MENU_OPTION_FEED_MONEY)){
+					if (purchaseChoices.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
 						System.out.println("How much money do you want to add?");
 						String moneyAdded = scan.nextLine();
 
 						//TODO: Prevent the balance from being anything other than whole dollars
 						Double doubleMoneyAdded = Double.parseDouble(moneyAdded);
-						Double balanceInPenniesDouble = (doubleMoneyAdded*100);
+						Double balanceInPenniesDouble = (doubleMoneyAdded * 100);
 						int balanceInPennies = balanceInPenniesDouble.intValue();
-						if (((balanceInPennies % 100) != 0)){
+						if (((balanceInPennies % 100) != 0)) {
 							System.out.println("This machine only takes whole dollars.");
 							break;
 						}
+						if (balanceInPennies >= 0) {
 							vm1.addMoney(doubleMoneyAdded);
 							System.out.println("Your current balance is " + vm1.getBalance());
+						} else {
+							System.out.println("Error: cannot process negative money");
+						}
 					}
 
 					//select product
